@@ -1,42 +1,45 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-document.querySelector('.form').addEventListener('submit', function(event) {
+const form = document.querySelector('.form');
+const delayInput = document.querySelector('.delay-input');
+
+const createPromise = (delay, state) => {
+  if (state === 'fulfilled') {
+    setTimeout(() => {
+      console.log(`✅ Fulfilled promise in ${delay}ms`);
+      iziToast.success(
+        {
+          message: `Fulfilled promise in ${delay} ms`,
+          position: 'topRight',
+        },
+      );
+    }, delay);
+  } else {
+    setTimeout(() => {
+      console.log(`❌ Rejected promise in ${delay}ms`);
+      iziToast.error(
+        {
+          message: `Rejected promise in ${delay} ms`,
+          position: 'topRight',
+
+        },
+      );
+    }, delay);
+  }
+};
+
+form.addEventListener(
+  'submit',
+  function(event) {
     event.preventDefault();
 
-    const delay = Number(this.delay.value);
-    const state = this.state.value;
+    const formData = new FormData(this);
+    const delayValue = formData.get('delay');
+    const stateValue = formData.get('state');
 
-    console.log('Delay:', delay); 
-    console.log('State:', state);   
-
-    const promise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if (state === 'fulfilled') {
-                console.log('Resolving...'); 
-                resolve(delay);
-            } else {
-                console.log('Rejecting...'); 
-                reject(delay);
-            }
-        }, delay);
-    });
-
-    promise
-        .then(delay => {
-            console.log('Promise fulfilled'); 
-            iziToast.success({
-                title: 'Success',
-                message: `✅ Fulfilled promise in ${delay}ms`,
-                position: 'topRight'
-            });
-        })
-        .catch(delay => {
-            console.log('Promise rejected'); 
-            iziToast.error({
-                title: 'Error',
-                message: `❌ Rejected promise in ${delay}ms`,
-                position: 'topRight'
-            });
-        });
-});
+    createPromise(delayValue, stateValue);
+    form.reset();
+  },
+  false,
+);
