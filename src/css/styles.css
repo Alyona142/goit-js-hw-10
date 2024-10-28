@@ -12,14 +12,26 @@
 @import url('./base.css');
 @import url('./container.css');
 
+.page {
+  display: flex;
+  justify-content: flex-start;
+
+  align-items: center;
+  height: 100vh;
+  padding-left: 50px;
+
+}
+
 timer-container {
-  margin: 0 auto;
-  max-width: 390px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 32px;
-  height: 70vh;
+  gap: 16 px;
+}
+
+.timer-start {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .nav-list {
@@ -101,11 +113,9 @@ fieldset:has(input:focus) {
 }
 
 .timer {
-  margin: 0 auto;
-  display: flex;
+display: flex;
   gap: 24px;
-  justify-content: center;
-  margin-top: 32px;
+  justify-content: flex-start;
 }
 
 .field {
