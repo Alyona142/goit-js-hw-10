@@ -12,11 +12,14 @@
 @import url('./base.css');
 @import url('./container.css');
 
-.page {
+timer-container {
+  margin: 0 auto;
+  max-width: 390px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  gap: 32px;
+  height: 70vh;
 }
 
 .nav-list {
@@ -40,13 +43,12 @@
   text-decoration: none;
 }
 
-.timer-action {
-  font-size: 0;
+.timer-start {
   display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 8px;
-  justify-content: center;
 }
-
 .datetime-picker {
   max-width: 272px;
   height: 40px;
@@ -99,6 +101,7 @@ fieldset:has(input:focus) {
 }
 
 .timer {
+  margin: 0 auto;
   display: flex;
   gap: 24px;
   justify-content: center;
