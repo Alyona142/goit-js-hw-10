@@ -5,41 +5,41 @@ const form = document.querySelector('.form');
 const delayInput = document.querySelector('.delay-input');
 
 const createPromise = (delay, state) => {
-  if (state === 'fulfilled') {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log(`✅ Fulfilled promise in ${delay}ms`);
-      iziToast.success(
-        {
+      if (state === 'fulfilled') {
+        console.log(`✅ Fulfilled promise in ${delay}ms`);
+        iziToast.success({
           message: `Fulfilled promise in ${delay} ms`,
           position: 'topRight',
-        },
-      );
-    }, delay);
-  } else {
-    setTimeout(() => {
-      console.log(`❌ Rejected promise in ${delay}ms`);
-      iziToast.error(
-        {
+        });
+        resolve(); 
+      } else {
+        console.log(`❌ Rejected promise in ${delay}ms`);
+        iziToast.error({
           message: `Rejected promise in ${delay} ms`,
           position: 'topRight',
-
-        },
-      );
+        });
+        reject(); 
+      }
     }, delay);
-  }
+  });
 };
 
-form.addEventListener(
-  'submit',
-  function(event) {
-    event.preventDefault();
+form.addEventListener('submit', function (event) {
+  event.preventDefault();
 
-    const formData = new FormData(this);
-    const delayValue = formData.get('delay');
-    const stateValue = formData.get('state');
+  const formData = new FormData(this);
+  const delayValue = Number(formData.get('delay')); 
+  const stateValue = formData.get('state');
 
-    createPromise(delayValue, stateValue);
-    form.reset();
-  },
-  false,
-);
+  createPromise(delayValue, stateValue)
+    .then(() => {
+      console.log('Promise was fulfilled!');
+    })
+    .catch(() => {
+      console.log('Promise was rejected!');
+    });
+
+  form.reset();
+}, false);
